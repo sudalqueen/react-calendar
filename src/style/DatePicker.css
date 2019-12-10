@@ -1,0 +1,15 @@
+.calendar-head-week-names{
+    display: flex;
+}
+
+.calendar-weekend-grid{
+    display: flex;
+}
+
+.calendar-head-week-name{
+    width: 130px;
+    height: 50px;
+    font-size: large;
+    font-weight: bold;
+}
+

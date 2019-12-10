@@ -1,9 +1,10 @@
 import React from 'react';
+import DatePicker from './Components/DatePicker';
 
 function App() {
     return(
         <div>
-            Hello World!
+            <DatePicker/>
         </div>
     )
 }
