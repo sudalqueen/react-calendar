@@ -5,13 +5,13 @@ const port = process.env.DEV_PORT || 7777;
 
 module.exports = {
     entry: [
-      './src/index.js'
+        './src/index.js'
     ],
     devtool: 'inline-source-map',
     output: {
-      path: __dirname + '/dist',
-      publicPath: '/',
-      filename: 'bundle.[hash].js'
+        path: __dirname + '/dist',
+        publicPath: '/',
+        filename: 'bundle.[hash].js'
     },
     devServer: {
         port: port,
@@ -20,42 +20,46 @@ module.exports = {
         contentBase: './dist',
         historyApiFallback: true,
     },
-    module:{
-        rules:[
-        {
-          test:/\.js$/,
-          exclude:/node_modules/,
-          use:'babel-loader'
-        },
-        {
-          test: /\.css$/,
-          use: [
+    module: {
+        rules: [
             {
-              loader: 'style-loader'
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
             },
             {
-              loader: 'css-loader',
-              options: {
-                modules: {
-                  mode: 'local',
-                  localIdentName: '[local]'
-                },
-                import: true,
-                importLoaders: true
-              }
+                test: /\.tsx?$/,
+                use: 'ts-loader'
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                mode: 'local',
+                                localIdentName: '[local]'
+                            },
+                            import: true,
+                            importLoaders: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(png|jpg)$/,
+                use: ['file-loader']
             }
-          ]
-        },
-        {
-            test: /\.(png|jpg)$/,
-            use: ['file-loader']
-        }
-      ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './index.html',
-      // favicon: 'dist/favicon.ico'
-    })
-  ],
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            // favicon: 'dist/favicon.ico'
+        })
+    ],
 };
