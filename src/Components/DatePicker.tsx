@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, ElementType} from 'react';
 import DayCell from "./DayCell";
 
 import "../style/DatePicker.css";
 
-const DatePicker = props => {
+const DatePicker = () => {
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth());
     const [day, setDay] = useState(new Date().getDate());
-    const [days, setDays] = useState([]);
-    const [totalWeeks, setTotalWeeks] = useState([]);
+    const [days, setDays] = useState<React.ReactElement<typeof DayCell>[]>([]);
+    const [totalWeeks, setTotalWeeks] = useState<number[]>([]);
     const weekNames = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const DatePicker = props => {
     }, []);
 
     const makeCalendar = () => {
-        let cells = [];
+        let cells:React.ReactElement<typeof DayCell>[] = [];
         let firstDay = new Date(year, month-2, 1);
         const lastDate = new Date(year, month -1, 0).getDate();
         const startWeek = firstDay.getDay() + 1;

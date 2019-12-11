@@ -2,7 +2,12 @@ import React from 'react';
 
 import "../style/DayCell.css";
 
-const DayCell = ({day, color}) => {
+type DayCellProps = {
+    day?: number;
+    color?: string;
+}
+
+const DayCell = ({day, color}: DayCellProps) => {
     return(
         <div className="calendar-day-cell">
             <div>
