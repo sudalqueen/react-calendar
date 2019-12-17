@@ -3,7 +3,7 @@ import DatePicker from "./DatePicker";
 import {RealSchedule} from "../model/RealSchedule";
 
 export type CalendarProps = {
-    schedules: Array<any>
+    schedules: Array<RealSchedule<any>>
 };
 
 function Calendar({schedules}: CalendarProps) {

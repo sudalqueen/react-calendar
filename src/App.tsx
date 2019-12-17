@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 
 import Calendar from "./Components/Calendar";
 import MySchedule from "./model/MySchedule";
+import {RealSchedule} from "./model/RealSchedule";
 
 function App() {
     const dataArr = [{
@@ -19,9 +20,10 @@ function App() {
         title: "휴가!"
     }];
 
-    const [schedules, setSchedules] = useState<Array<MySchedule>>(dataArr.map(data=>{
+    const [schedules, setSchedules] = useState<Array<RealSchedule<MySchedule>>>(dataArr.map(data=>{
         const mySchedule = new MySchedule(data);
-        return mySchedule;
+        const realSchedule = new RealSchedule(mySchedule);
+        return realSchedule;
     }));
 
     return (
