@@ -1,5 +1,6 @@
 import {BaseSchedule} from "./BaseSchedule";
 
+//TODO: 리네이밍하기
 export class RealSchedule<T extends BaseSchedule> {
     private schedule: T;
 

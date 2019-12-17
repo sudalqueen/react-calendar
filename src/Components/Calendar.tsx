@@ -7,6 +7,15 @@ export type CalendarProps = {
     schedules: Array<RealSchedule<any>>
 };
 
+/*
+* TODO
+*  1. makeViewScheduleMatrix 동작하게 수정
+*  2. initMatrix(이차원배열 초기화) 로직 분리해서 메소드로 작성
+*  3. viewScheduleMatrix 만들 때 while문 수정 -> 스케쥴 분배가 제대로 안되고 있음
+*  4. 드래그 이벤트 만들어서 viewSchedule에 달기 (근데 어디에?) => 드래그이벤트,, 따로 뺄 수 있다면 dragHandler.ts 이런식으로 빼도 좋을듯
+*  5. viewSchedule 만들 때 2, 3줄 처럼 여러줄의 schedule 처리 방식 설계하기
+*/
+
 function Calendar({schedules}: CalendarProps) {
     const [scheduleData, setScheduleData] = useState<Array<RealSchedule<any>>>(schedules);
 
