@@ -3,6 +3,12 @@
     height: 100px;
 }
 
-.red{
+.current {
+    border-radius: 50%;
+    background-color: darksalmon;
+    font-weight: bold;
+}
+
+.red {
     color: red;
 }
