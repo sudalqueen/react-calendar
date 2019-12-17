@@ -1,10 +1,32 @@
 import * as React from 'react';
-import DatePicker from './Components/DatePicker';
+import {useEffect, useState} from "react";
+
+import Calendar from "./Components/Calendar";
+import MySchedule from "./model/MySchedule";
 
 function App() {
-    return(
+    const dataArr = [{
+        startDay: 1,
+        endDay: 1,
+        title: "리액트 스터디"
+    }, {
+        startDay: 4,
+        endDay: 4,
+        title: "신입 교육 참가"
+    }, {
+        startDay: 15,
+        endDay: 15,
+        title: "휴가!"
+    }];
+
+    const [schedules, setSchedules] = useState<Array<MySchedule>>(dataArr.map(data=>{
+        const mySchedule = new MySchedule(data);
+        return mySchedule;
+    }));
+
+    return (
         <div>
-            <DatePicker/>
+            <Calendar schedules={schedules}/>
         </div>
     )
 }
