@@ -32,3 +32,13 @@
     font-weight: bold;
 }
 
+.calendar-schedule-grid {
+    position: absolute;
+    width: 1000px;
+}
+
+.calendar-schedule-block {
+    position: absolute;
+    width: 100%;
+    left: 14%;
+}
