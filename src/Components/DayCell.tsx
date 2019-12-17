@@ -5,13 +5,14 @@ import "../style/DayCell.css";
 type DayCellProps = {
     day?: number;
     color?: string;
+    className?: string;
 }
 
-const DayCell = ({day, color}: DayCellProps) => {
-    return(
+const DayCell = ({day, color, className}: DayCellProps) => {
+    return (
         <div className="calendar-day-cell">
             <div>
-                <span className={color}>{day}</span>
+                <span className={`${color ? color : ''} ${className ? className : ''}`}>{day}</span>
             </div>
         </div>
     )
