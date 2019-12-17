@@ -1,5 +1,6 @@
-.view-schedule{
+.view-schedule {
     width: 14.28571428571429%;
-    height: 10px;
+    height: 20px;
     background-color: mediumpurple;
+    display: inline;
 }
