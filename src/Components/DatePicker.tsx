@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 import DayCell from "./DayCell";
 
@@ -32,10 +32,10 @@ const DatePicker = (props: DatePickerProps) => {
                         props.weekNames.map(week => <div key={week} className="calendar-head-week-name">{week}</div>)
                     }
                 </div>
-                <div>
+                <div className="calendar-weekends">
                     {
                         props.totalWeeks.map(index => {
-                            return <div>
+                            return <div className="calendar-weekend-wrapper">
                                 <div className="calendar-weekend-grid">
                                     {props.dayMatrix[index].map(day => {
                                         if (day !== 0) {
@@ -49,9 +49,14 @@ const DatePicker = (props: DatePickerProps) => {
                                         }
                                     })}
                                     <div className="calendar-schedule-grid">
+                                        <div className="calendar-schedule-space"/>
                                         {
-                                            props.scheduleMatrix[index].map(viewSchedule =>
-                                                <div className="calendar-schedule-block">{viewSchedule}</div>)
+                                            props.scheduleMatrix[index].map(viewSchedule => {
+                                                if(viewSchedule !== <></>){
+                                                    return <div className="calendar-schedule-block">{viewSchedule}</div>
+                                                }
+                                                return;
+                                            })
                                         }
                                     </div>
                                 </div>
