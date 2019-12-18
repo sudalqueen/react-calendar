@@ -10,23 +10,21 @@ export type ScheduleProps = {
 
 class MySchedule extends BaseSchedule{
     private readonly _id: string;
-    private readonly _startDay: number;
-    private readonly _endDay: number;
-    private readonly _duration: number;
-    private readonly _title: string;
-    private readonly _draggable: boolean;
+    private _startDay: number;
+    private _endDay: number;
+    private _title: string;
+    private _draggable: boolean;
 
     constructor(data: ScheduleProps) {
         super();
         this._id = '';
         this._startDay = data.startDay || 0;
         this._endDay = data.endDay || 0;
-        this._duration = 0;
         this._title = data.title || '';
         this._draggable = data.draggable || true;
     }
 
-    get getId(): string{
+    getId(): string{
         return this._id;
     }
 
@@ -38,20 +36,32 @@ class MySchedule extends BaseSchedule{
         return this._endDay;
     }
 
-    get getDuration(): number{
-        return this._duration;
-    }
-
     getTitle(): string{
         return this._title;
     }
 
-    get getDraggable(): boolean{
+    getDraggable(): boolean{
         return this._draggable;
     }
 
+    set setStartDay(startDay: number){
+        this._startDay = startDay;
+    }
+
+    set setEndDay(endDay: number){
+        this._endDay = endDay;
+    }
+
+    set setTitle(title: string){
+        this._title = title;
+    }
+
+    set setDraggable(draggable: boolean){
+        this._draggable = draggable;
+    }
+
     isEqual(schedule: MySchedule): boolean {
-        if (this._id !== schedule.getId) {
+        if (this._id !== schedule.getId()) {
             return false;
         }
         if (this._startDay !== schedule.getStartDay()) {
@@ -60,13 +70,10 @@ class MySchedule extends BaseSchedule{
         if (this._endDay !== schedule.getEndDay()) {
             return false;
         }
-        if (this._duration !== schedule.getDuration) {
-            return false;
-        }
         if (this._title !== schedule.getTitle()){
             return false;
         }
-        if (this._draggable !== schedule.getDraggable) {
+        if (this._draggable !== schedule.getDraggable()) {
             return false;
         }
         return true;
