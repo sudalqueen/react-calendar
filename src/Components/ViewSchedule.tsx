@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {RealSchedule} from "../model/RealSchedule";
+import {Schedule} from "../model/Schedule";
 
 import "../style/ViewSchedule.css";
 
@@ -10,7 +10,7 @@ import "../style/ViewSchedule.css";
 */
 
 export type ViewScheduleType = {
-    schedule: RealSchedule<any>,
+    schedule: Schedule<any>,
     startY: number,
     startX: number
 };

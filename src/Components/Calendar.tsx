@@ -1,10 +1,10 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import DatePicker from "./DatePicker";
-import {RealSchedule} from "../model/RealSchedule";
+import {Schedule} from "../model/Schedule";
 import ViewSchedule, {ViewScheduleType} from "./ViewSchedule";
 
 export type CalendarProps = {
-    schedules: Array<RealSchedule<any>>
+    schedules: Array<Schedule<any>>
 };
 
 /*
@@ -17,7 +17,7 @@ export type CalendarProps = {
 */
 
 function Calendar({schedules}: CalendarProps) {
-    const [scheduleData, setScheduleData] = useState<Array<RealSchedule<any>>>(schedules);
+    const [scheduleData, setScheduleData] = useState<Array<Schedule<any>>>(schedules);
 
     const now = new Date();
     const currentYear = now.getFullYear();
