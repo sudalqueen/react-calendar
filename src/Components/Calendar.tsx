@@ -31,43 +31,6 @@ function Calendar({schedules}: CalendarProps) {
     const [dayMatrix, setDayMatrix] = useState<number[][]>([]);
     const [scheduleMatrix, setScheduleMatrix] = useState<any[][]>([]);
 
-    const makeViewScheduleMatrix = () => {
-        let matrix: any[][] = [];
-
-        let firstDay = new Date(year, month, 1);
-        const lastDate = new Date(year, month + 1, 0).getDate();
-        const startWeek = firstDay.getDay();
-        const totalCells = startWeek + lastDate + 1 <= 35 ? 35 : 42;
-        const weeks = totalCells / 7;
-
-        for (let i = 0; i < weeks; i++) {
-            matrix[i] = [];
-            for (let j = 0; j < 7; j++) {
-                matrix[i][j] = <></>;
-            }
-        }
-
-        // const thisMonthSchedules = scheduleData.map(schedule => {
-        //     return schedule;
-        // });
-        //
-        // let index = 0;
-        //
-        // for (let i = 0; i < dayMatrix.length; i++) {
-        //     for (let j = 0; j < dayMatrix[i].length; j++) {
-        //         while (index < thisMonthSchedules.length && thisMonthSchedules[index].getStartDay() < dayMatrix[i][6]) {
-        //             const schedule = thisMonthSchedules[index];
-        //             if (schedule.getStartDay() <= dayMatrix[i][j]) {
-        //                 matrix[i][j] = <ViewSchedule schedule={schedule}/>;
-        //                 index++;
-        //             }
-        //         }
-        //     }
-        // }
-        //
-        // setScheduleMatrix(matrix);
-    };
-
     const makeDayMatrix = () => {
         let matrix: number[][] = [];
         let viewMatrix: any[][] = [];
@@ -101,26 +64,29 @@ function Calendar({schedules}: CalendarProps) {
             }
         }
 
+        /*스케쥴에서 이번달것만 따로 빼기*/
         const thisMonthSchedules = scheduleData.map(schedule => {
             return schedule;
         });
 
-        let index = 0;
-
-        for (let i = 0; i < matrix.length; i++) {
-            for (let j = 0; j < matrix[i].length; j++) {
-                while (index < thisMonthSchedules.length && thisMonthSchedules[index].getStartDay() <= matrix[i][6]) {
-                    const schedule = thisMonthSchedules[index];
-                    if (schedule.getStartDay() <= matrix[i][j]) {
-                        viewMatrix[i][j] = <ViewSchedule schedule={schedule} startY={i} startX={j}/>;
-                    }
-                    index++;
-                }
+        let firstDateIndex = 0;
+        for(let i = 0; i < matrix[0].length; i++){
+            if(matrix[0][i] === 1){
+                firstDateIndex = i;
             }
         }
 
-        setScheduleMatrix(viewMatrix);
+        for(let i = 0; i < thisMonthSchedules.length; i++){
+            const schedule = thisMonthSchedules[i];
+            const scheduleStartIndex = firstDateIndex + schedule.getStartDay() - 1;
+            const scheduleWeekIndex = Math.floor(scheduleStartIndex / 7);
+            const scheduleDateIndex = scheduleStartIndex - (scheduleWeekIndex * 7);
+            viewMatrix[scheduleWeekIndex][scheduleDateIndex] = <ViewSchedule schedule={schedule} startY={scheduleWeekIndex} startX={scheduleDateIndex}/>;
+            console.log(scheduleWeekIndex, scheduleDateIndex, viewMatrix);
+        }
 
+
+        setScheduleMatrix(viewMatrix);
         setDayMatrix(matrix);
     };
 
@@ -144,7 +110,6 @@ function Calendar({schedules}: CalendarProps) {
 
     useEffect(() => {
         makeDayMatrix();
-        makeViewScheduleMatrix();
     }, [year, month]);
 
     return (
