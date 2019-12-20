@@ -3,27 +3,25 @@ import {useEffect, useState} from "react";
 
 import Calendar from "./Components/Calendar";
 import MySchedule from "./model/MySchedule";
-import {RealSchedule} from "./model/RealSchedule";
 
 function App() {
     const dataArr = [{
-        startDay: 1,
-        endDay: 1,
-        title: "리액트 스터디"
-    }, {
-        startDay: 4,
-        endDay: 4,
+        startDay: 2,
+        endDay: 2,
         title: "신입 교육 참가"
     }, {
-        startDay: 15,
-        endDay: 15,
+        startDay: 24,
+        endDay: 25,
+        title: "해피 메리 크리스마스"
+    },{
+        startDay: 16,
+        endDay: 16,
         title: "휴가!"
     }];
 
-    const [schedules, setSchedules] = useState<Array<RealSchedule<MySchedule>>>(dataArr.map(data=>{
+    const [schedules, setSchedules] = useState<Array<MySchedule>>(dataArr.map(data=>{
         const mySchedule = new MySchedule(data);
-        const realSchedule = new RealSchedule(mySchedule);
-        return realSchedule;
+        return mySchedule;
     }));
 
     return (

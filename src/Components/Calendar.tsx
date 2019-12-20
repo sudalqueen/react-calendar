@@ -1,10 +1,10 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import DatePicker from "./DatePicker";
-import {Schedule} from "../model/Schedule";
 import ViewSchedule, {ViewScheduleType} from "./ViewSchedule";
+import {BaseSchedule} from "../model/BaseSchedule";
 
-export type CalendarProps = {
-    schedules: Array<Schedule<any>>
+export type CalendarProps<T extends BaseSchedule> = {
+    schedules: Array<T>
 };
 
 /*
@@ -16,8 +16,8 @@ export type CalendarProps = {
 *  5. viewSchedule 만들 때 2, 3줄 처럼 여러줄의 schedule 처리 방식 설계하기
 */
 
-function Calendar({schedules}: CalendarProps) {
-    const [scheduleData, setScheduleData] = useState<Array<Schedule<any>>>(schedules);
+function Calendar<T extends BaseSchedule>({schedules}: CalendarProps<T>) {
+    // const [scheduleData, setScheduleData] = useState<Array<T>>(schedules);
 
     const now = new Date();
     const currentYear = now.getFullYear();
@@ -65,7 +65,7 @@ function Calendar({schedules}: CalendarProps) {
         }
 
         /*스케쥴에서 이번달것만 따로 빼기*/
-        const thisMonthSchedules = scheduleData.map(schedule => {
+        const thisMonthSchedules = schedules.map(schedule => {
             return schedule;
         });
 
@@ -81,10 +81,9 @@ function Calendar({schedules}: CalendarProps) {
             const scheduleStartIndex = firstDateIndex + schedule.getStartDay() - 1;
             const scheduleWeekIndex = Math.floor(scheduleStartIndex / 7);
             const scheduleDateIndex = scheduleStartIndex - (scheduleWeekIndex * 7);
-            viewMatrix[scheduleWeekIndex][scheduleDateIndex] = <ViewSchedule schedule={schedule} startY={scheduleWeekIndex} startX={scheduleDateIndex}/>;
-            console.log(scheduleWeekIndex, scheduleDateIndex, viewMatrix);
-        }
 
+            viewMatrix[scheduleWeekIndex][scheduleDateIndex] = <ViewSchedule schedule={schedule} startX={scheduleDateIndex}/>;
+        }
 
         setScheduleMatrix(viewMatrix);
         setDayMatrix(matrix);

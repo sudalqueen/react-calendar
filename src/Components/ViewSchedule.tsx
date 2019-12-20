@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Schedule} from "../model/Schedule";
+import React, {useEffect, useState} from 'react';
+import {BaseSchedule} from "../model/BaseSchedule";
 
 import "../style/ViewSchedule.css";
 
@@ -9,15 +9,21 @@ import "../style/ViewSchedule.css";
 *  2. dragEvent 만들어서 걸어주기
 */
 
-export type ViewScheduleType = {
-    schedule: Schedule<any>,
-    startY: number,
+export type ViewScheduleType<T extends BaseSchedule> = {
+    schedule: T,
     startX: number
 };
 
-function ViewSchedule(props: ViewScheduleType){
+function ViewSchedule<T extends BaseSchedule>({schedule, startX}: ViewScheduleType<T>){
+    const StandardSize = 100/7;
+    const width = 1 + schedule.getEndDay() - schedule.getStartDay();
+
     return(
-        <div className="view-schedule">{props.schedule.getTitle()}</div>
+        <div className="view-schedule-block" style={{width: `${StandardSize * width}%`,left: `${StandardSize * startX}%`}}>
+            <div className="view-schedule">
+                {schedule.getTitle()}
+            </div>
+        </div>
     )
 }
 
