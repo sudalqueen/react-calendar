@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {DragEvent, useEffect, useState} from 'react';
 import {BaseSchedule} from "../model/BaseSchedule";
 
 import "../style/ViewSchedule.css";
@@ -14,12 +14,50 @@ export type ViewScheduleType<T extends BaseSchedule> = {
     startX: number
 };
 
-function ViewSchedule<T extends BaseSchedule>({schedule, startX}: ViewScheduleType<T>){
-    const StandardSize = 100/7;
+function ViewSchedule<T extends BaseSchedule>({schedule, startX}: ViewScheduleType<T>) {
+    const StandardSize = 100 / 7;
     const width = 1 + schedule.getEndDay() - schedule.getStartDay();
 
-    return(
-        <div className="view-schedule-block" style={{width: `${StandardSize * width}%`,left: `${StandardSize * startX}%`}}>
+
+    function handleDrag(event: DragEvent<HTMLDivElement>) {
+
+    }
+
+    function handleDragEnd(event: DragEvent<HTMLDivElement>): void {
+
+    }
+
+    function handleDragEnter(event: DragEvent<HTMLDivElement>): void {
+
+    }
+
+    function handleDragExit(event: DragEvent<HTMLDivElement>): void {
+
+    }
+
+    function handleDragLeave(event: DragEvent<HTMLDivElement>): void {
+
+    }
+
+    function handleDragOver(event: DragEvent<HTMLDivElement>): void {
+        event.preventDefault();
+    }
+
+    function handleDragStart(event: DragEvent<HTMLDivElement>): void {
+        event.dataTransfer.setData("data", schedule.getId());
+    }
+
+    function handleDrop(event: DragEvent<HTMLDivElement>): void {
+        event.preventDefault();
+        console.log(event);
+    }
+
+    return (
+        <div className="view-schedule-block"
+             style={{width: `${StandardSize * width}%`, left: `${StandardSize * startX}%`}}
+             draggable onDrag={handleDrag} onDragEnd={handleDragEnd}
+             onDragEnter={handleDragEnter} onDragExit={handleDragExit} onDragLeave={handleDragLeave}
+             onDragOver={handleDragOver} onDragStart={handleDragStart} onDrop={handleDrop}>
             <div className="view-schedule">
                 {schedule.getTitle()}
             </div>

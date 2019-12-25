@@ -4,7 +4,8 @@ import ViewSchedule, {ViewScheduleType} from "./ViewSchedule";
 import {BaseSchedule} from "../model/BaseSchedule";
 
 export type CalendarProps<T extends BaseSchedule> = {
-    schedules: Array<T>
+    schedules: Array<T>,
+    handleChangeDateChange(id:any, pickDay: number): void
 };
 
 /*
@@ -16,7 +17,7 @@ export type CalendarProps<T extends BaseSchedule> = {
 *  5. viewSchedule 만들 때 2, 3줄 처럼 여러줄의 schedule 처리 방식 설계하기
 */
 
-function Calendar<T extends BaseSchedule>({schedules}: CalendarProps<T>) {
+function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: CalendarProps<T>) {
     // const [scheduleData, setScheduleData] = useState<Array<T>>(schedules);
 
     const now = new Date();
@@ -109,13 +110,14 @@ function Calendar<T extends BaseSchedule>({schedules}: CalendarProps<T>) {
 
     useEffect(() => {
         makeDayMatrix();
-    }, [year, month]);
+    }, [year, month, schedules]);
 
     return (
         <div>
             <DatePicker year={year} month={month} day={day} currentYear={currentYear} currentMonth={currentMonth}
                         weekNames={weekNames} totalWeeks={totalWeeks} dayMatrix={dayMatrix}
-                        scheduleMatrix={scheduleMatrix} prevMonth={prevMonth} nextMonth={nextMonth}/>
+                        scheduleMatrix={scheduleMatrix} prevMonth={prevMonth} nextMonth={nextMonth}
+                        handleChangeDateChange={handleChangeDateChange}/>
         </div>
     )
 }
