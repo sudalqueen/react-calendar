@@ -1,7 +1,7 @@
 import {BaseSchedule} from "./BaseSchedule";
 
 export type ScheduleProps = {
-    id?: string;
+    id: number;
     startDay: number;
     endDay: number;
     title: string;
@@ -9,7 +9,7 @@ export type ScheduleProps = {
 }
 
 class MySchedule extends BaseSchedule{
-    private readonly _id: string;
+    private readonly _id: number;
     private _startDay: number;
     private _endDay: number;
     private _title: string;
@@ -17,14 +17,14 @@ class MySchedule extends BaseSchedule{
 
     constructor(data: ScheduleProps) {
         super();
-        this._id = '';
+        this._id = data.id || -1;
         this._startDay = data.startDay || 0;
         this._endDay = data.endDay || 0;
         this._title = data.title || '';
         this._draggable = data.draggable || true;
     }
 
-    getId(): string{
+    getId(): number{
         return this._id;
     }
 
@@ -58,6 +58,10 @@ class MySchedule extends BaseSchedule{
 
     set setDraggable(draggable: boolean){
         this._draggable = draggable;
+    }
+
+    setScheduleDate(startDay: number, endDay: number): void {
+
     }
 
     isEqual(schedule: MySchedule): boolean {

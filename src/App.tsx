@@ -6,14 +6,17 @@ import MySchedule from "./model/MySchedule";
 
 function App() {
     const dataArr = [{
+        id: 1,
         startDay: 2,
         endDay: 2,
         title: "신입 교육 참가"
     }, {
+        id: 2,
         startDay: 24,
         endDay: 25,
         title: "해피 메리 크리스마스"
     },{
+        id: 3,
         startDay: 16,
         endDay: 16,
         title: "휴가!"
@@ -24,9 +27,21 @@ function App() {
         return mySchedule;
     }));
 
+    const handleChangeDateChange = (id:number, pickDay: number) => {
+        const newSchedule: Array<MySchedule> = schedules.map(schedule => {
+            if(schedule.getId() === id){
+                const duration: number = schedule.getEndDay() - schedule.getStartDay();
+                schedule.setStartDay = pickDay;
+                schedule.setEndDay = pickDay + duration;
+            }
+            return schedule;
+        });
+        setSchedules(newSchedule);
+    };
+
     return (
         <div>
-            <Calendar schedules={schedules}/>
+            <Calendar schedules={schedules} handleChangeDateChange={handleChangeDateChange}/>
         </div>
     )
 }

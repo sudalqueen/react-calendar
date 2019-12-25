@@ -15,7 +15,8 @@ type DatePickerProps = {
     dayMatrix: number[][],
     scheduleMatrix: any[][],
     prevMonth(): void,
-    nextMonth(): void
+    nextMonth(): void,
+    handleChangeDateChange(id:any, pickDay: number): void
 };
 
 const DatePicker = (props: DatePickerProps) => {
@@ -40,12 +41,12 @@ const DatePicker = (props: DatePickerProps) => {
                                     {props.dayMatrix[index].map(day => {
                                         if (day !== 0) {
                                             if (props.year === props.currentYear && props.month === props.currentMonth && day === props.day) {
-                                                return <DayCell day={day} className="current"/>
+                                                return <DayCell day={day} className="current" handleChangeDateChange={props.handleChangeDateChange}/>
                                             } else {
-                                                return <DayCell day={day}/>
+                                                return <DayCell day={day} handleChangeDateChange={props.handleChangeDateChange}/>
                                             }
                                         } else {
-                                            return <DayCell/>
+                                            return <DayCell day={day} handleChangeDateChange={props.handleChangeDateChange}/>
                                         }
                                     })}
                                     <div className="calendar-schedule-grid">
