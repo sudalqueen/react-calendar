@@ -20,6 +20,11 @@ function App() {
         startDay: 16,
         endDay: 16,
         title: "휴가!"
+    },{
+        id: 4,
+        startDay: 16,
+        endDay: 16,
+        title: "룰루"
     }];
 
     const [schedules, setSchedules] = useState<Array<MySchedule>>(dataArr.map(data=>{
