@@ -30,11 +30,11 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
     const [day, setDay] = useState(now.getDate());
     const [totalWeeks, setTotalWeeks] = useState<number[]>([]);
     const [dayMatrix, setDayMatrix] = useState<number[][]>([]);
-    const [scheduleMatrix, setScheduleMatrix] = useState<any[][]>([]);
+    const [scheduleMatrix, setScheduleMatrix] = useState<Array<Array<Array<ReactElement>>>>([]);
 
     const makeDayMatrix = () => {
         let matrix: number[][] = [];
-        let viewMatrix: any[][] = [];
+        let viewMatrix: Array<Array<Array<ReactElement>>> = [];
 
         let firstDay = new Date(year, month, 1);
         const lastDate = new Date(year, month + 1, 0).getDate();
@@ -51,7 +51,7 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
             viewMatrix[i] = [];
             for (let j = 0; j < 7; j++) {
                 matrix[i][j] = 0;
-                viewMatrix[i][j] = <></>;
+                viewMatrix[i][j] = new Array<ReactElement>();
             }
         }
 
@@ -83,7 +83,8 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
             const scheduleWeekIndex = Math.floor(scheduleStartIndex / 7);
             const scheduleDateIndex = scheduleStartIndex - (scheduleWeekIndex * 7);
 
-            viewMatrix[scheduleWeekIndex][scheduleDateIndex] = <ViewSchedule schedule={schedule} startX={scheduleDateIndex}/>;
+            const viewScheduleNumber = viewMatrix[scheduleWeekIndex][scheduleDateIndex].length + 1;
+            viewMatrix[scheduleWeekIndex][scheduleDateIndex].push(<ViewSchedule schedule={schedule} startX={scheduleDateIndex} startY={viewScheduleNumber}/>);
         }
 
         setScheduleMatrix(viewMatrix);

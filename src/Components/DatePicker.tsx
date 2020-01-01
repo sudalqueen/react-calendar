@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement, useEffect} from 'react';
 
 import DayCell from "./DayCell";
 
@@ -13,10 +13,10 @@ type DatePickerProps = {
     weekNames: string[],
     totalWeeks: number[],
     dayMatrix: number[][],
-    scheduleMatrix: any[][],
+    scheduleMatrix: Array<Array<Array<ReactElement>>>,
     prevMonth(): void,
     nextMonth(): void,
-    handleChangeDateChange(id:any, pickDay: number): void
+    handleChangeDateChange(id: any, pickDay: number): void
 };
 
 const DatePicker = (props: DatePickerProps) => {
@@ -41,22 +41,22 @@ const DatePicker = (props: DatePickerProps) => {
                                     {props.dayMatrix[index].map(day => {
                                         if (day !== 0) {
                                             if (props.year === props.currentYear && props.month === props.currentMonth && day === props.day) {
-                                                return <DayCell day={day} className="current" handleChangeDateChange={props.handleChangeDateChange}/>
+                                                return <DayCell day={day} className="current"
+                                                                handleChangeDateChange={props.handleChangeDateChange}/>
                                             } else {
-                                                return <DayCell day={day} handleChangeDateChange={props.handleChangeDateChange}/>
+                                                return <DayCell day={day}
+                                                                handleChangeDateChange={props.handleChangeDateChange}/>
                                             }
                                         } else {
-                                            return <DayCell day={day} handleChangeDateChange={props.handleChangeDateChange}/>
+                                            return <DayCell day={day}
+                                                            handleChangeDateChange={props.handleChangeDateChange}/>
                                         }
                                     })}
                                     <div className="calendar-schedule-grid">
                                         <div className="calendar-schedule-space"/>
                                         {
-                                            props.scheduleMatrix[index].map(viewSchedule => {
-                                                if(viewSchedule !== <></>){
-                                                    return <div className="calendar-schedule-block">{viewSchedule}</div>
-                                                }
-                                                return;
+                                            props.scheduleMatrix[index].map(viewSchedules => {
+                                                return viewSchedules.map(viewSchedule => <div className="calendar-schedule-block">{viewSchedule}</div>)
                                             })
                                         }
                                     </div>
