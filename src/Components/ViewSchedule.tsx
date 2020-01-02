@@ -11,11 +11,13 @@ import "../style/ViewSchedule.css";
 
 export type ViewScheduleType<T extends BaseSchedule> = {
     schedule: T,
-    startX: number
+    startX: number,
+    startY: number
 };
 
-function ViewSchedule<T extends BaseSchedule>({schedule, startX}: ViewScheduleType<T>) {
+function ViewSchedule<T extends BaseSchedule>({schedule, startX, startY}: ViewScheduleType<T>) {
     const StandardSize = 100 / 7;
+    const height = 22;
     const width = 1 + schedule.getEndDay() - schedule.getStartDay();
 
 
@@ -54,7 +56,7 @@ function ViewSchedule<T extends BaseSchedule>({schedule, startX}: ViewScheduleTy
 
     return (
         <div className="view-schedule-block"
-             style={{width: `${StandardSize * width}%`, left: `${StandardSize * startX}%`}}
+             style={{width: `${StandardSize * width}%`, left: `${StandardSize * startX}%`, top: `${height * startY}px`}}
              draggable onDrag={handleDrag} onDragEnd={handleDragEnd}
              onDragEnter={handleDragEnter} onDragExit={handleDragExit} onDragLeave={handleDragLeave}
              onDragOver={handleDragOver} onDragStart={handleDragStart} onDrop={handleDrop}>
