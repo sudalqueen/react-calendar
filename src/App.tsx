@@ -7,24 +7,27 @@ import MySchedule from "./model/MySchedule";
 function App() {
     const dataArr = [{
         id: 1,
-        startDay: 2,
-        endDay: 2,
-        title: "신입 교육 참가"
+        startDay: 6,
+        endDay: 9,
+        title: "신입 교육 참가",
+        color: "navy"
     }, {
         id: 2,
-        startDay: 24,
-        endDay: 25,
-        title: "해피 메리 크리스마스"
+        startDay: 12,
+        endDay: 17,
+        title: "여행",
+        color: "lightcoral"
     },{
         id: 3,
-        startDay: 16,
-        endDay: 16,
+        startDay: 11,
+        endDay: 12,
         title: "휴가!"
     },{
         id: 4,
-        startDay: 16,
-        endDay: 16,
-        title: "룰루"
+        startDay: 20,
+        endDay: 22,
+        title: "룰루",
+        color: "crimson"
     }];
 
     const [schedules, setSchedules] = useState<Array<MySchedule>>(dataArr.map(data=>{

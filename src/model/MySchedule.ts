@@ -6,6 +6,7 @@ export type ScheduleProps = {
     endDay: number;
     title: string;
     draggable?: boolean;
+    color?: string;
 }
 
 class MySchedule extends BaseSchedule{
@@ -14,6 +15,7 @@ class MySchedule extends BaseSchedule{
     private _endDay: number;
     private _title: string;
     private _draggable: boolean;
+    private _color: string;
 
     constructor(data: ScheduleProps) {
         super();
@@ -22,6 +24,7 @@ class MySchedule extends BaseSchedule{
         this._endDay = data.endDay || 0;
         this._title = data.title || '';
         this._draggable = data.draggable || true;
+        this._color = data.color || 'mediumpurple';
     }
 
     getId(): number{
@@ -44,6 +47,10 @@ class MySchedule extends BaseSchedule{
         return this._draggable;
     }
 
+    getBackgroundColor(): string {
+        return this._color;
+    }
+
     set setStartDay(startDay: number){
         this._startDay = startDay;
     }
@@ -58,6 +65,10 @@ class MySchedule extends BaseSchedule{
 
     set setDraggable(draggable: boolean){
         this._draggable = draggable;
+    }
+
+    set setColor(color: string){
+        this._color = color;
     }
 
     setScheduleDate(startDay: number, endDay: number): void {

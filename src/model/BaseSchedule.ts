@@ -3,4 +3,5 @@ export abstract class BaseSchedule {
     abstract getEndDay(): number;
     abstract getTitle(): string;
     abstract getId(): any;
+    abstract getBackgroundColor(): string;
 }

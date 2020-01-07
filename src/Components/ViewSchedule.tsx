@@ -55,7 +55,10 @@ function ViewSchedule<T extends BaseSchedule>({schedule, startX, startY, width}:
 
     return (
         <div className="view-schedule-block"
-             style={{width: `${StandardSize * width}%`, left: `${StandardSize * startX}%`, top: `${height * startY}px`}}
+             style={{
+                 width: `${StandardSize * width}%`, left: `${StandardSize * startX}%`, top: `${height * startY}px`,
+                 backgroundColor: schedule.getBackgroundColor()
+             }}
              draggable onDrag={handleDrag} onDragEnd={handleDragEnd}
              onDragEnter={handleDragEnter} onDragExit={handleDragExit} onDragLeave={handleDragLeave}
              onDragOver={handleDragOver} onDragStart={handleDragStart} onDrop={handleDrop}>
