@@ -3,8 +3,10 @@ import React, {ReactElement, useEffect} from 'react';
 import DayCell from "./DayCell";
 
 import "../style/DatePicker.css";
+import Schedule from "../model/Schedule";
+import {BaseSchedule} from "../model/BaseSchedule";
 
-type DatePickerProps = {
+type DatePickerProps<T extends BaseSchedule> = {
     year: number,
     month: number,
     day: number,
@@ -13,13 +15,13 @@ type DatePickerProps = {
     weekNames: string[],
     totalWeeks: number[],
     dayMatrix: number[][],
-    scheduleMatrix: Array<Array<Array<ReactElement>>>,
+    scheduleMatrix: Array<Array<Array<Schedule<T>>>>,
     prevMonth(): void,
     nextMonth(): void,
     handleChangeDateChange(id: any, pickDay: number): void
 };
 
-const DatePicker = (props: DatePickerProps) => {
+function DatePicker<T extends BaseSchedule>(props: DatePickerProps<T>) {
     return (
         <div>
             <header className="calendar-header">
@@ -56,14 +58,14 @@ const DatePicker = (props: DatePickerProps) => {
                                         <div className="calendar-schedule-space"/>
                                         {
                                             props.scheduleMatrix[index].map(viewSchedules => {
-                                                return viewSchedules.map(viewSchedule => <div className="calendar-schedule-block">{viewSchedule}</div>)
+                                                return viewSchedules.map((viewSchedule, index) =>
+                                                    <div className="calendar-schedule-block">{viewSchedule.getViewScheduleElement}</div>)
                                             })
                                         }
                                     </div>
                                 </div>
                             </div>
                         })
-
                     }
                 </div>
             </div>

@@ -12,14 +12,13 @@ import "../style/ViewSchedule.css";
 export type ViewScheduleType<T extends BaseSchedule> = {
     schedule: T,
     startX: number,
-    startY: number
+    startY: number,
+    width: number
 };
 
-function ViewSchedule<T extends BaseSchedule>({schedule, startX, startY}: ViewScheduleType<T>) {
+function ViewSchedule<T extends BaseSchedule>({schedule, startX, startY, width}: ViewScheduleType<T>) {
     const StandardSize = 100 / 7;
     const height = 22;
-    const width = 1 + schedule.getEndDay() - schedule.getStartDay();
-
 
     function handleDrag(event: DragEvent<HTMLDivElement>) {
 

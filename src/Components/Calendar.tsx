@@ -2,10 +2,11 @@ import React, {ReactElement, useEffect, useState} from 'react';
 import DatePicker from "./DatePicker";
 import ViewSchedule, {ViewScheduleType} from "./ViewSchedule";
 import {BaseSchedule} from "../model/BaseSchedule";
+import Schedule from "../model/Schedule";
 
 export type CalendarProps<T extends BaseSchedule> = {
     schedules: Array<T>,
-    handleChangeDateChange(id:any, pickDay: number): void
+    handleChangeDateChange(id: any, pickDay: number): void
 };
 
 /*
@@ -30,11 +31,11 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
     const [day, setDay] = useState(now.getDate());
     const [totalWeeks, setTotalWeeks] = useState<number[]>([]);
     const [dayMatrix, setDayMatrix] = useState<number[][]>([]);
-    const [scheduleMatrix, setScheduleMatrix] = useState<Array<Array<Array<ReactElement>>>>([]);
+    const [scheduleMatrix, setScheduleMatrix] = useState<Array<Array<Array<Schedule<T>>>>>([]);
 
     const makeDayMatrix = () => {
         let matrix: number[][] = [];
-        let viewMatrix: Array<Array<Array<ReactElement>>> = [];
+        let viewMatrix: Array<Array<Array<Schedule<T>>>> = [];
 
         let firstDay = new Date(year, month, 1);
         const lastDate = new Date(year, month + 1, 0).getDate();
@@ -51,7 +52,7 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
             viewMatrix[i] = [];
             for (let j = 0; j < 7; j++) {
                 matrix[i][j] = 0;
-                viewMatrix[i][j] = new Array<ReactElement>();
+                viewMatrix[i][j] = new Array<Schedule<T>>();
             }
         }
 
@@ -70,26 +71,84 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
             return schedule;
         });
 
+        thisMonthSchedules.sort((a, b) => {
+            const durationA = a.getEndDay() - a.getStartDay();
+            const durationB = b.getEndDay() - b.getStartDay();
+
+            if (durationA > durationB) {
+                return -1;
+            } else if (durationA < durationB) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        thisMonthSchedules.sort((a, b) => {
+            if (a.getStartDay() > b.getStartDay()) {
+                return 1;
+            } else if (a.getStartDay() < b.getStartDay()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        console.log(thisMonthSchedules)
+
         let firstDateIndex = 0;
-        for(let i = 0; i < matrix[0].length; i++){
-            if(matrix[0][i] === 1){
+        for (let i = 0; i < matrix[0].length; i++) {
+            if (matrix[0][i] === 1) {
                 firstDateIndex = i;
             }
         }
 
-        for(let i = 0; i < thisMonthSchedules.length; i++){
+        for (let i = 0; i < thisMonthSchedules.length; i++) {
             const schedule = thisMonthSchedules[i];
-            const scheduleStartIndex = firstDateIndex + schedule.getStartDay() - 1;
-            const scheduleWeekIndex = Math.floor(scheduleStartIndex / 7);
-            const scheduleDateIndex = scheduleStartIndex - (scheduleWeekIndex * 7);
+            let duration = schedule.getEndDay() - schedule.getStartDay() + 1;
 
-            const viewScheduleNumber = viewMatrix[scheduleWeekIndex][scheduleDateIndex].length + 1;
-            viewMatrix[scheduleWeekIndex][scheduleDateIndex].push(<ViewSchedule schedule={schedule} startX={scheduleDateIndex} startY={viewScheduleNumber}/>);
+            for (let j = 0; j < schedule.getEndDay() - schedule.getStartDay() + 1; j++) {
+                const scheduleStartIndex = firstDateIndex + schedule.getStartDay() - 1 + j;
+                const scheduleWeekIndex = getWeekIndex(scheduleStartIndex);
+                const scheduleDateIndex = getDateIndex(scheduleStartIndex, scheduleWeekIndex);
+                const viewScheduleNumber = viewMatrix[scheduleWeekIndex][scheduleDateIndex].length + 1;
+
+                let viewSchedule: ReactElement;
+
+                if (j == 0 || scheduleStartIndex%7 == 0) {
+                    let viewScheduleWidth;
+
+                    if(7 - scheduleDateIndex < duration){
+                        viewScheduleWidth = 7 - scheduleDateIndex;
+                        duration -= viewScheduleWidth;
+                    }else{
+                        viewScheduleWidth = duration;
+                    }
+
+                    viewSchedule = <ViewSchedule schedule={schedule} startX={scheduleDateIndex}
+                                                 startY={viewScheduleNumber} width={viewScheduleWidth}/>;
+                } else {
+                    viewSchedule = <></>;
+                }
+
+                viewMatrix[scheduleWeekIndex][scheduleDateIndex].push(new Schedule<T>({
+                    schedule: schedule,
+                    viewSchedule: viewSchedule
+                }));
+            }
         }
 
         setScheduleMatrix(viewMatrix);
         setDayMatrix(matrix);
     };
+
+    function getWeekIndex(startIndex: number): number {
+        return Math.floor(startIndex / 7);
+    }
+
+    function getDateIndex(startIndex: number, weekIndex: number) {
+        return startIndex - (weekIndex * 7);
+    }
 
     const prevMonth = () => {
         if (month - 1 === -1) {
