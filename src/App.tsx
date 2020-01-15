@@ -47,9 +47,20 @@ function App() {
         setSchedules(newSchedule);
     };
 
+    const handleAddSchedule = (data: any) => {
+        const newData = Object.assign(data, {id: dataArr.length+1});
+        const newDataArr = dataArr.concat(newData);
+        console.log(newDataArr)
+
+        setSchedules(newDataArr.map(data=>{
+            const mySchedule = new MySchedule(data);
+            return mySchedule;
+        }))
+    };
+
     return (
         <div>
-            <Calendar schedules={schedules} handleChangeDateChange={handleChangeDateChange}/>
+            <Calendar schedules={schedules} handleChangeDateChange={handleChangeDateChange} handleAddSchedule={handleAddSchedule}/>
         </div>
     )
 }

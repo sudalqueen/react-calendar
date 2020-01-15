@@ -3,23 +3,17 @@ import DatePicker from "./DatePicker";
 import ViewSchedule, {ViewScheduleType} from "./ViewSchedule";
 import {BaseSchedule} from "../model/BaseSchedule";
 import Schedule from "../model/Schedule";
+import ScheduleEditPopUp from "./ScheduleEditPopUp";
 
 export type CalendarProps<T extends BaseSchedule> = {
     schedules: Array<T>,
-    handleChangeDateChange(id: any, pickDay: number): void
+    handleChangeDateChange(id: any, pickDay: number): void,
+    handleAddSchedule(data: any): void
 };
 
-/*
-* TODO
-*  1. makeViewScheduleMatrix로 스케쥴 만드는 메소드 따로 분리하기
-*  2. initMatrix(이차원배열 초기화) 로직 분리해서 메소드로 작성
-*  3. viewScheduleMatrix 이차원 배열에서 Map을 가지는 배열로 수정
-*  4. 드래그 이벤트 만들어서 viewSchedule에 달기 (근데 어디에?) => 드래그이벤트,, 따로 뺄 수 있다면 dragHandler.ts 이런식으로 빼도 좋을듯
-*  5. viewSchedule 만들 때 2, 3줄 처럼 여러줄의 schedule 처리 방식 설계하기
-*/
-
-function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: CalendarProps<T>) {
+function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange, handleAddSchedule}: CalendarProps<T>) {
     // const [scheduleData, setScheduleData] = useState<Array<T>>(schedules);
+    const [open, setOpen] = useState(false);
 
     const now = new Date();
     const currentYear = now.getFullYear();
@@ -115,13 +109,13 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
 
                 let viewSchedule: ReactElement;
 
-                if (j == 0 || scheduleStartIndex%7 == 0) {
+                if (j == 0 || scheduleStartIndex % 7 == 0) {
                     let viewScheduleWidth;
 
-                    if(7 - scheduleDateIndex < duration){
+                    if (7 - scheduleDateIndex < duration) {
                         viewScheduleWidth = 7 - scheduleDateIndex;
                         duration -= viewScheduleWidth;
-                    }else{
+                    } else {
                         viewScheduleWidth = duration;
                     }
 
@@ -178,6 +172,7 @@ function Calendar<T extends BaseSchedule>({schedules, handleChangeDateChange}: C
                         weekNames={weekNames} totalWeeks={totalWeeks} dayMatrix={dayMatrix}
                         scheduleMatrix={scheduleMatrix} prevMonth={prevMonth} nextMonth={nextMonth}
                         handleChangeDateChange={handleChangeDateChange}/>
+            <ScheduleEditPopUp handleAddSchedule={handleAddSchedule}/>
         </div>
     )
 }
