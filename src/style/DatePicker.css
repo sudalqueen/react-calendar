@@ -1,15 +1,54 @@
-.calendar-head-week-names{
+.calendar-header {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.calendar-header span {
+    margin: 10px;
+}
+
+.calendar-header-prev-btn:before {
+    content: '\003C';
+    cursor: pointer;
+}
+
+.calendar-header-next-btn:before {
+    content: '\003E';
+    cursor: pointer;
+}
+
+.calendar-head-week-names {
     display: flex;
 }
 
-.calendar-weekend-grid{
-    display: flex;
+.calendar-weekends{
+    width: 1000px;
+    height: 500px;
 }
 
-.calendar-head-week-name{
+.calendar-weekend-wrapper{
+    width: 100%;
+    height: 20%;
+}
+
+.calendar-weekend-grid {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.calendar-head-week-name {
     width: 130px;
     height: 50px;
     font-size: large;
     font-weight: bold;
 }
 
+.calendar-schedule-space{
+    height: 25px;
+}
+
+.calendar-schedule-grid {
+    position: absolute;
+    width: 1000px;
+}

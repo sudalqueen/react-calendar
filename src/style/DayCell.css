@@ -1,8 +1,14 @@
 .calendar-day-cell {
-    width: 130px;
-    height: 100px;
+    width: 14.28571428571429%;
+    height: 100%;
 }
 
-.red{
+.current {
+    border-radius: 50%;
+    background-color: darksalmon;
+    font-weight: bold;
+}
+
+.red {
     color: red;
 }

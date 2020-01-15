@@ -5,13 +5,16 @@ const port = process.env.DEV_PORT || 7777;
 
 module.exports = {
     entry: [
-        './src/index.js'
+        './src/index.tsx'
     ],
     devtool: 'inline-source-map',
     output: {
         path: __dirname + '/dist',
         publicPath: '/',
         filename: 'bundle.[hash].js'
+    },
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
     },
     devServer: {
         port: port,
@@ -28,8 +31,8 @@ module.exports = {
                 use: 'babel-loader'
             },
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader'
+                test: /\.(ts|tsx)$/,
+                use: 'ts-loader',
             },
             {
                 test: /\.css$/,

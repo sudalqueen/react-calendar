@@ -1,0 +1,9 @@
+.popup-wrapper{
+    border: 1px solid black;
+    padding: 20px;
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    width: 300px;
+    background: #fff;
+}

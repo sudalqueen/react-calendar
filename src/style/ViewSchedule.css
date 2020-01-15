@@ -1,0 +1,10 @@
+.view-schedule-block{
+    position: absolute;
+}
+
+.view-schedule {
+    width: 14.28571428571429%;
+    height: 20px;
+    display: inline;
+    color: white;
+}
